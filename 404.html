@@ -1,13 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>404</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+ 
+    #hitokoto {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+ 
+    #hitokoto_text {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 1.2em;
+      transition: color 0.3s ease;
+    }
+ 
+    #hitokoto_text:hover {
+      color: #0056b3;
+    }
+ 
+    #provider {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
 </head>
+ 
 <body>
-    <h1 style="text-align:center;">404-error</h1>
-    <h2 style="text-align:center;">you are visiting : www.wanwusangzhi.top</h2>
-    <hr>
-    <h3 style="text-align:center;">by wanwusangzhi</h2>
+  <div id="hitokoto">
+    <a href="#" id="hitokoto_text">获取中...</a>
+    <p id="provider">404</p>
+    <p id="provider">wanwusangzhi.top</p>
+    <p id="provider">by wanwusangzhi</p>
+  </div>
+ 
+  <script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', 'https://v1.hitokoto.cn/?c=d');
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        const hitokoto = document.querySelector('#hitokoto_text');
+        hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`;
+        hitokoto.innerText = data.hitokoto;
+      }
+    };
+    xhr.send();
+  </script>
 </body>
 </html>
